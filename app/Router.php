@@ -7,7 +7,6 @@
      */
 
     namespace App;
-    use App\Exceptions\MethodNotAllowedException;
     use App\Exceptions\RouteNotFoundException;
 
     class Router
