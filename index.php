@@ -1,5 +1,5 @@
 <?php
-
+	ob_start();
 	require 'vendor/autoload.php';
 
 	$app = new App\App;
@@ -35,4 +35,6 @@
 	$app->get('/users/:id', [new App\Controllers\UserController($container->db), 'one']);
 
 	$app->run();
+	ob_end_flush();
+
 
