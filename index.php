@@ -32,7 +32,7 @@
 
 	$app->get('/', [new App\Controllers\HomeController, 'index']);
 	$app->get('/users', [new App\Controllers\UserController($container->db), 'index']);
-	$app->get('/users/:num', [new App\Controllers\UserController($container->db), 'one']);
+	$app->get('/users/:id', [new App\Controllers\UserController($container->db), 'one']);
 
 	$app->run();
 	ob_end_flush();
