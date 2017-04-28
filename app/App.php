@@ -71,8 +71,8 @@
 //            print_r($router->methods);
 //            echo "<br><br>Params: <br>";
 //            print_r($router->params);
-//            echo "<br><br>Identifiers: <br>";
-//            print_r($router->parts);
+//            echo "<br><br>Bindings: <br>";
+//            print_r($router->bindings);
 //            print_r($router->test);
         }
 
@@ -85,10 +85,10 @@
                     $callable[0] = new $callable[0];
                 }
 
-                return call_user_func($callable, $response);
+                return call_user_func($callable, $response,$this->container->router->params);
             }
 
-            return $callable($response);
+            return $callable($response,$this->container->router->params);
         }
 
         protected function respond($response)

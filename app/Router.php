@@ -16,13 +16,13 @@
         public $routes = [];
         public $methods = [];
         public $params;
-        public $parts = [];
+        public $bindings = [];
         public $test;
         public $uri;
 
         protected $pattern = [
             ':id' => '\d',
-            ':name' => '[a-zA-Z]',
+            ':name' => '[a-zA-Z0-9-_.]',
             ':num' => '[0-9]',
             ':alpha' => '[a-zA-Z]',
             ':alphaNum' => '[a-zA-Z0-9]',
@@ -38,14 +38,25 @@
         {
             $this->routes[$uri] = $handler;
             $this->methods[$uri] = $methods;
-            $this->parts[$uri] = $this->parseUrl($uri);
+            $this->bindings[$uri] = $this->parseUrl($uri);
         }
 
         public function getResponse()
         {
-            foreach ($this->parts as $key => $value) {
+            foreach ($this->bindings as $key => $value) {
                 $string = "/" . ltrim(implode("\/+", $value), "\/+") . "+$/";
                 if (preg_match($string, $this->path)) {
+
+                    $this->params = array_combine(
+                        str_replace(
+                            ':','',
+                            array_flip(
+                                $this->bindings[$key]
+                            )
+                        ),
+                        $this->params
+                    );
+
                     if (!in_array($_SERVER['REQUEST_METHOD'], $this->methods[$key])) {
                         throw new MethodNotAllowedException('Method not Allowed!');
                     }
@@ -74,7 +85,7 @@
         }
 
         private function parseUrl($uri){
-            $parts = [];
+            $bindings = [];
 
             if(isset($uri)){
                 // get the URL from the base defined in the.htaccess file.
@@ -87,12 +98,12 @@
                 // add all array values to the class var routes.
 
                 foreach($url as $key => $value){
-                    $parts[$value] = $value;
+                    $bindings[$value] = $value;
                     if(isset($this->pattern[$value])) {
-                        $parts[$value] = $this->pattern[$value];
+                        $bindings[$value] = $this->pattern[$value];
                     }
                 }
-                return $parts;
             }
+            return $bindings;
         }
     }
