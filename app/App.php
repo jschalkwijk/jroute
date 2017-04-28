@@ -3,6 +3,7 @@
     namespace App;
 
     use App\Exceptions\RouteNotFoundException;
+    use App\Exceptions\MethodNotAllowedException;
 
     class App
     {
@@ -54,13 +55,20 @@
                 } else {
                     return;
                 }
+            } catch (MethodNotAllowedException $e) {
+                if ($this->container->has('errorHandler')) {
+                    $response = $this->container->errorHandler;
+                } else {
+                    return;
+                }
             }
-
            return $this->respond($this->process($response));
 //            echo "Response: ";
 //            print_r($response);
 //            echo "<br><br>Routes: <br>";
 //            print_r($router->routes);
+//            echo "<br><br>Methods: <br>";
+//            print_r($router->methods);
 //            echo "<br><br>Params: <br>";
 //            print_r($router->params);
 //            echo "<br><br>Identifiers: <br>";

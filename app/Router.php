@@ -8,12 +8,13 @@
 
     namespace App;
     use App\Exceptions\RouteNotFoundException;
+    use App\Exceptions\MethodNotAllowedException;
 
     class Router
     {
         public $path;
         public $routes = [];
-        protected $methods = [];
+        public $methods = [];
         public $params;
         public $parts = [];
         public $test;
@@ -42,51 +43,20 @@
 
         public function getResponse()
         {
-            foreach($this->parts as $key => $value){
-                $string = "/".ltrim(implode("\/+",$value),"\/+")."+$/";
+            foreach ($this->parts as $key => $value) {
+                $string = "/" . ltrim(implode("\/+", $value), "\/+") . "+$/";
                 if (preg_match($string, $this->path)) {
+                    if (!in_array($_SERVER['REQUEST_METHOD'], $this->methods[$key])) {
+                        throw new MethodNotAllowedException('Method not Allowed!');
+                    }
+
                     return $this->routes[$key];
                 }
             }
+
             throw new RouteNotFoundException('No route found!');
-
-
-//            foreach($this->parts as $key => $value){
-//                $string = "/".implode("\/+",$value)."/";
-//                if(preg_match($string,$this->path)){
-//                    return [$this->routes[$key]];
-//                }
-//
-//                //preg_match("/[a-zA-Z]\/+[0-9]/",$this->path);
-//            }
-//            foreach($this->routes as $key => $value){
-//                if($key == implode("/",$this->parts[$key])){
-//
-//                    $route = $this->parts[$key];
-//                    if(!empty($this->parts[$key])){
-//                        if(in_array(":id",$this->parts[$key])){
-//                            $this->test = preg_match("/[a-zA-Z]\/+[0-9]/",$this->path);
-//                        }
-//                        if (!$this->test){
-//                            throw new RouteNotFoundException();
-//                        }
-//                    }
-//
-//                    return [$this->routes[implode("/",$route)]];
-//                }
-//
-//            }
-
-//            if (!isset($this->routes[$this->path])){
-//                throw new RouteNotFoundException('No route found!');
-//            }
-
-//            if (!in_array($_SERVER['REQUEST_METHOD'],$this->methods[implode("/",$this->parts)])){
-//                throw new MethodNotAllowedException;
-//            }
-            //return $this->routes[$this->path];
-//            return $this->routes[implode("/",$this->route)];
         }
+
         private function params(){
             if(isset($this->path)){
                 // get the URL from the base defined in the.htaccess file.
@@ -102,6 +72,7 @@
                 }
             }
         }
+
         private function parseUrl($uri){
             $parts = [];
 
