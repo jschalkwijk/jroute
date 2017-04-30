@@ -44,7 +44,7 @@
         public function run()
         {
             $router = $this->container->router;
-            $router->setPath($_SERVER['PATH_INFO'] ?? '/');
+            $router->setPath($_GET['url'] ?? '/');
             echo "Path: <br>";
             print_r($router->path);
             try {

@@ -98,9 +98,11 @@
                 // add all array values to the class var routes.
 
                 foreach($url as $key => $value){
-                    $bindings[$value] = $value;
-                    if(isset($this->pattern[$value])) {
-                        $bindings[$value] = $this->pattern[$value];
+                    if(!empty($key) && !empty($value)) {
+                        $bindings[$value] = $value;
+                        if (isset($this->pattern[$value])) {
+                            $bindings[$value] = $this->pattern[$value];
+                        }
                     }
                 }
             }
