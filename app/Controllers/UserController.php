@@ -17,6 +17,7 @@ class UserController
     public function index($response,$params)
     {
         $users = $this->db->query("SELECT * FROM users")->fetchAll(PDO::FETCH_CLASS, User::class);
+        //$users = [['first_name' =>'jorn']];
         $data = [];
         foreach($users as $user){
             $u = new User();
@@ -32,13 +33,14 @@ class UserController
     public function one($response,$params)
     {
         $users = $this->db->query("SELECT * FROM users WHERE user_id = {$params['id']} LIMIT 1")->fetchAll(PDO::FETCH_CLASS, User::class);
+//        $users = [['first_name' =>'jorn']];
         $data = [];
         foreach($users as $user){
-//            $u = new User();
-//            foreach($user as $key => $value){
-//                $u->$key = $value;
-//            }
-            $data[] = $user;
+            $u = new User();
+            foreach($user as $key => $value){
+                $u->$key = $value;
+            }
+            $data[] = $u;
         }
         return print_r($data);
 //        return $response->withJson($data);

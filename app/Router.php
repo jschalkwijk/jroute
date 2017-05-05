@@ -19,6 +19,8 @@
         public $bindings = [];
         public $test;
         public $uri;
+        public $group;
+        public $prefix;
 
         protected $pattern = [
             ':id' => '\d',
@@ -36,6 +38,9 @@
         }
         public function addRoute($uri,$handler, array $methods = [])
         {
+            if(!empty($this->prefix)){
+                $uri = $this->prefix.$uri;
+            }
             $this->routes[$uri] = $handler;
             $this->methods[$uri] = $methods;
             $this->bindings[$uri] = $this->parseUrl($uri);

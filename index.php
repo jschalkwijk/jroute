@@ -30,9 +30,22 @@
 		);
 	};
 
+
 	$app->get('/', [new App\Controllers\HomeController, 'index']);
-	$app->get('/users', [new App\Controllers\UserController($container->db), 'index']);
-	$app->get('/users/:id', [new App\Controllers\UserController($container->db), 'one']);
+	$app->group('/admin',function($app){
+		$app->group('/users',function($app,$container){
+			$app->get('', [new App\Controllers\UserController($container->db), 'index']);
+			$app->get('/edit/:id', [new App\Controllers\UserController($container->db), 'one']);
+			$app->get('/create', [new App\Controllers\UserController($container->db), 'one']);
+			$app->get('/delete', [new App\Controllers\UserController($container->db), 'one']);
+		});
+		$app->group('/posts',function($app,$container){
+			$app->get('', [new App\Controllers\UserController($container->db), 'index']);
+			$app->get('/edit/:id', [new App\Controllers\UserController($container->db), 'one']);
+			$app->get('/create', [new App\Controllers\UserController($container->db), 'one']);
+			$app->get('/delete', [new App\Controllers\UserController($container->db), 'one']);
+		});
+	});
 
 	$app->run();
 	ob_end_flush();
