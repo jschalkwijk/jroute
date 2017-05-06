@@ -74,6 +74,8 @@
 	});
 
 	$app->run();
+	echo "<br><br>Container: <br>";
+	print_r($container);
 	ob_end_flush();
 
 
