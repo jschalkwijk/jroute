@@ -76,20 +76,20 @@
                     return;
                 }
             }
-           return $this->respond($this->process($response));
-//            echo "Response: ";
-//            print_r($response);
-//            echo "<br><br>Routes: <br>";
-//            print_r($router->routes);
-//            echo "<br><br>Route Groups: <br>";
-//            print_r($router->group);
-//            echo "<br><br>Methods: <br>";
-//            print_r($router->methods);
-//            echo "<br><br>Params: <br>";
-//            print_r($router->params);
-//            echo "<br><br>Bindings: <br>";
-//            print_r($router->bindings);
-//            print_r($router->test);
+//           return $this->respond($this->process($response));
+            echo "Response: ";
+            print_r($response);
+            echo "<br><br>Routes: <br>";
+            print_r($router->routes);
+            echo "<br><br>Route Groups: <br>";
+            print_r($router->group);
+            echo "<br><br>Methods: <br>";
+            print_r($router->methods);
+            echo "<br><br>Params: <br>";
+            print_r($router->params);
+            echo "<br><br>Bindings: <br>";
+            print_r($router->bindings);
+            print_r($router->match);
         }
 
         protected function process($callable)

@@ -21,6 +21,7 @@
         public $uri;
         public $group;
         public $prefix;
+        public $match;
 
         protected $pattern = [
             ':id' => '\d',
@@ -50,6 +51,7 @@
         {
             foreach ($this->bindings as $key => $value) {
                 $string = "/" . ltrim(implode("\/+", $value), "\/+") . "+$/";
+                $this->match = $string;
                 if (preg_match($string, $this->path)) {
 
                     $this->params = array_combine(
