@@ -9,9 +9,16 @@
     {
         protected $container;
 
-        public function __construct($container)
+        public function __construct()
         {
-            $this->container = $container;
+            $this->container = new Container([
+                'router' => function () {
+                    return new Router;
+                },
+                'response' => function () {
+                    return new Response;
+                }
+            ]);
         }
 
         public function getContainer()
@@ -83,8 +90,6 @@
             echo "<br><br>Bindings: <br>";
             print_r($router->bindings);
             print_r($router->match);
-            echo "<br><br>Container: <br>";
-            print_r($this->container);
         }
 
         protected function process($callable)
