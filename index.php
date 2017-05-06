@@ -1,17 +1,10 @@
 <?php
 	ob_start();
 	require 'vendor/autoload.php';
-	use App\Container;
-	use App\Router;
-	use App\Response;
 
-	$container =  new Container;
-	$container['router'] = function () {
-			return new Router;
-		};
-		$container['response'] = function () {
-			return new Response;
-		};
+	$app = new App\App;
+
+	$container = $app->getContainer();
 
 	$container['errorHandler'] = function () {
 		return function ($response) {
@@ -37,7 +30,6 @@
 		);
 	};
 
-	$app = new App\App($container);
 
 	$app->get('/', [new App\Controllers\HomeController, 'index']);
 	$app->group('/admin',function($app){
@@ -74,6 +66,8 @@
 	});
 
 	$app->run();
+	echo "<br><br>Container: <br>";
+	print_r($app->getContainer());
 	ob_end_flush();
 
 
