@@ -7,18 +7,11 @@
 
     class App
     {
-        protected $container;
+        public $container;
 
-        public function __construct()
+        public function __construct($container)
         {
-            $this->container = new Container([
-                'router' => function () {
-                    return new Router;
-                },
-                'response' => function () {
-                    return new Response;
-                }
-            ]);
+           $this->container = $container;
         }
 
         public function getContainer()
@@ -90,6 +83,8 @@
             echo "<br><br>Bindings: <br>";
             print_r($router->bindings);
             print_r($router->match);
+            echo "<br><br>Container: <br>";
+            print_r($this->container);
         }
 
         protected function process($callable)
