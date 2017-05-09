@@ -47,6 +47,17 @@
             $this->bindings[$uri] = $this->parseUrl($uri);
         }
 
+        public function group($prefix)
+        {
+            if(empty($this->group)) {
+                $this->group[$prefix] = $prefix;
+            } else {
+                reset($this->group);
+                $first = key($this->group);
+                $this->group[$prefix] = $first.$prefix;
+            }
+            $this->prefix = $this->group[$prefix];
+        }
         public function getResponse()
         {
             foreach ($this->bindings as $key => $value) {

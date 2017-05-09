@@ -36,15 +36,7 @@
 
         public function group($prefix,\Closure $callback)
         {
-            $router =  $this->container->router;
-            if(empty($router->group)) {
-                $router->group[$prefix] = $prefix;
-            } else {
-                reset($router->group);
-                $first = key($router->group);
-                $router->group[$prefix] = $first.$prefix;
-            }
-            $router->prefix = $router->group[$prefix];
+            $this->container->router->group($prefix);
             call_user_func($callback, $this,$this->container);
         }
 
@@ -69,22 +61,22 @@
                     return;
                 }
             }
-//           return $this->respond($this->process($response));
-            echo "Response: ";
-            print_r($response);
-            echo "<br><br>Routes: <br>";
-            print_r($router->routes);
-            echo "<br><br>Route Groups: <br>";
-            print_r($router->group);
-            echo "<br><br>Methods: <br>";
-            print_r($router->methods);
-            echo "<br><br>Params: <br>";
-            print_r($router->params);
-            echo "<br><br>Bindings: <br>";
-            print_r($router->bindings);
-            print_r($router->match);
-            echo "<br><br>Container: <br>";
-            print_r($this->container);
+           return $this->respond($this->process($response));
+//            echo "Response: ";
+//            print_r($response);
+//            echo "<br><br>Routes: <br>";
+//            print_r($router->routes);
+//            echo "<br><br>Route Groups: <br>";
+//            print_r($router->group);
+//            echo "<br><br>Methods: <br>";
+//            print_r($router->methods);
+//            echo "<br><br>Params: <br>";
+//            print_r($router->params);
+//            echo "<br><br>Bindings: <br>";
+//            print_r($router->bindings);
+//            print_r($router->match);
+//            echo "<br><br>Container: <br>";
+//            print_r($this->container);
         }
 
         protected function process($callable)
