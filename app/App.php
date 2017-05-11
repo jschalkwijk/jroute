@@ -44,8 +44,8 @@
         {
             $router = $this->container->router;
             $router->setPath($_GET['url'] ?? '/');
-            echo "Path: <br>";
-            print_r($router->path);
+//            echo "Path: <br>";
+//            print_r($router->path);
             try {
                 $response = $router->getResponse();
             } catch (RouteNotFoundException $e) {

@@ -1,9 +1,13 @@
 <?php
-    /**
-     * Created by PhpStorm.
-     * User: jorn
-     * Date: 06-05-17
-     * Time: 19:34
+    /*
+    |--------------------------------------------------------------------------
+    | Starting the App.
+    |--------------------------------------------------------------------------
+    */
+    /*
+     * Start filling the Container with dependencies.
+     * Feed the container to the new App instance.
+     * Return the app.
      */
     use App\Container;
     use App\Router;
