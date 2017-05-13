@@ -10,16 +10,16 @@
      */
     class Router
     {
-        public $path;
-        public $routes = [];
-        public $methods = [];
-        public $params;
-        public $bindings = [];
-        public $test;
-        public $uri;
-        public $group;
-        public $prefix;
-        public $match;
+        protected $path;
+        protected $routes = [];
+        protected $methods = [];
+        protected $params;
+        protected $bindings = [];
+        protected $test;
+        protected $uri;
+        protected $group;
+        protected $prefix;
+        protected $match;
 
         /**
          * Define the named parameters and preg match patterns in this array
@@ -34,6 +34,13 @@
             ':alphaNum' => '[a-zA-Z0-9]',
         ];
 
+        /**
+         * @return mixed
+         */
+        public function getParams()
+        {
+            return $this->params;
+        }
         /**
          * Setting the current path
          * @param $path
@@ -143,9 +150,7 @@
          */
         private function parseUrl($uri){
             $bindings = [];
-//            if($uri == '/'){
-//                return ['/' =>'/'];
-//            }
+
             if(isset($uri)){
                 // filter url
                 $url = filter_var(trim($uri),FILTER_SANITIZE_URL);

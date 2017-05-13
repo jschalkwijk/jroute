@@ -44,8 +44,7 @@
         {
             $router = $this->container->router;
             $router->setPath($_GET['url'] ?? '/');
-//            echo "Path: <br>";
-//            print_r($router->path);
+
             try {
                 $response = $router->getResponse();
             } catch (RouteNotFoundException $e) {
@@ -88,10 +87,10 @@
                     $callable[0] = new $callable[0];
                 }
 
-                return call_user_func($callable, $response,$this->container->router->params);
+                return call_user_func($callable, $response,$this->container->router->getParams());
             }
 
-            return $callable($response,$this->container->router->params);
+            return $callable($response,$this->container->router->getParams());
         }
 
         protected function respond($response)
